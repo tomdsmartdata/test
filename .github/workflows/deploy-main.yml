@@ -48,9 +48,11 @@ jobs:
           JEKYLL_ENV: production
       - name: Check for broken links
         run: |
-          bundle exec htmlproofer ./_site > links.log
-          cat links.log >> $GITHUB_STEP_SUMMARY
+          bundle exec htmlproofer ./_site &> links.log
         continue-on-error: true
+      - name: Add to job summary
+        run: |
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
       - name: Archive broken links logs
         uses: actions/upload-artifact@v1
         with:
